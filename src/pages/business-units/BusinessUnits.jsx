@@ -5,7 +5,7 @@ import CardProduct from "../../components/fragments/CardProduct";
 import { getProducts } from "../../services/product.service";
 import { useLogin } from "../../hooks/useLogin";
 
-const Dashboard = () => {
+const BusinessUnits = () => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([]);
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
     return (
         <MainLayout>
-            <PageContainer title="Dashboard">
+            <PageContainer title="Business Units">
                 <Fragment>
                     <div className="flex justify-center py-5"></div>
                 </Fragment>
@@ -44,4 +44,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default BusinessUnits;

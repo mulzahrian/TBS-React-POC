@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MenuCard from "./MenuCard";
+
 import {
     Home,
     Users,
@@ -18,13 +21,12 @@ import {
     ClipboardList,
 } from "lucide-react";
 
-import MenuCard from "./MenuCard";
-
 const menuItems = [
     {
         key: "dashboard",
         label: "Home",
         icon: Home,
+        path: "/dashboard",
     },
     {
         key: "administrator",
@@ -34,6 +36,7 @@ const menuItems = [
             {
                 label: "Business Units",
                 icon: Building2,
+                path: "/business-units",
             },
             {
                 label: "Departments",
@@ -130,6 +133,7 @@ const menuItems = [
 ];
 
 const Sidebar = ({ isOpen }) => {
+    const navigate = useNavigate();
     const [openMenu, setOpenMenu] = useState(null);
     const [active, setActive] = useState("dashboard");
 
@@ -171,6 +175,10 @@ const Sidebar = ({ isOpen }) => {
                                             if (item.children) {
                                                 toggleMenu(item.key);
                                             }
+
+                                            if (item.path) {
+                                                navigate(item.path);
+                                            }
                                         }}
                                         className={`flex items-center justify-between w-full p-3 rounded-xl transition-all
                                         ${
@@ -203,6 +211,7 @@ const Sidebar = ({ isOpen }) => {
                                                 return (
                                                     <button
                                                         key={idx}
+                                                        onClick={() => navigate(child.path)}
                                                         className="flex items-center gap-3 w-full p-2 rounded-lg text-sm text-gray-600 hover:bg-[#e6f0fa] hover:text-[#045db0] transition-all"
                                                     >
                                                         <ChildIcon size={16} />

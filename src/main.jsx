@@ -9,6 +9,7 @@ import ProductsPage from "./pages/products.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import DetailProductPage from "./pages/detailProduct.jsx";
 import Profile from "./pages/profile.jsx";
+import BusinessUnits from "./pages/business-units/BusinessUnits.jsx";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
     {
         path: "/dashboards/:id",
         element: <DetailProductPage />,
+    },
+    {
+        path: "/business-units",
+        element: <BusinessUnits />,
     },
     {
         path: "/profile",
