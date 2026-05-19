@@ -1,24 +1,131 @@
 import { useState } from "react";
-import { Home, Users, Settings, ChevronDown } from "lucide-react";
+import {
+    Home,
+    Users,
+    ChevronDown,
+    Bell,
+    Bus,
+    PlaneTakeoff,
+    PlaneLanding,
+    Building2,
+    ShieldCheck,
+    UserCog,
+    Settings,
+    Briefcase,
+    CalendarDays,
+    Car,
+    IdCard,
+    ClipboardList,
+} from "lucide-react";
+
 import MenuCard from "./MenuCard";
 
 const menuItems = [
     {
         key: "dashboard",
-        label: "Dashboard",
+        label: "Home",
         icon: Home,
-        children: ["Overview", "Stats"],
     },
     {
-        key: "users",
-        label: "Users",
+        key: "administrator",
+        label: "Administrator",
         icon: Users,
-        children: ["List", "Roles"],
+        children: [
+            {
+                label: "Business Units",
+                icon: Building2,
+            },
+            {
+                label: "Departments",
+                icon: Briefcase,
+            },
+            {
+                label: "User Types",
+                icon: UserCog,
+            },
+            {
+                label: "Privilages",
+                icon: ShieldCheck,
+            },
+            {
+                label: "Role",
+                icon: Users,
+            },
+            {
+                label: "System Values",
+                icon: Settings,
+            },
+        ],
     },
     {
-        key: "settings",
-        label: "Settings",
-        icon: Settings,
+        key: "dispatcher",
+        label: "Dispatcher",
+        icon: Bell,
+        children: [
+            {
+                label: "Employees",
+                icon: Users,
+            },
+            {
+                label: "Vehicles",
+                icon: Car,
+            },
+            {
+                label: "Drivers",
+                icon: IdCard,
+            },
+            {
+                label: "Schedules Bus",
+                icon: CalendarDays,
+            },
+            {
+                label: "Schedules Airport",
+                icon: PlaneTakeoff,
+            },
+            {
+                label: "Manifest Bus",
+                icon: ClipboardList,
+            },
+            {
+                label: "Manifest Airport",
+                icon: PlaneLanding,
+            },
+        ],
+    },
+    {
+        key: "booking",
+        label: "My Booking",
+        icon: Bus,
+    },
+    {
+        key: "departure",
+        label: "Departure",
+        icon: PlaneTakeoff,
+        children: [
+            {
+                label: "Bus Weekend",
+                icon: Bus,
+            },
+            {
+                label: "Airport",
+                icon: PlaneTakeoff,
+            },
+        ],
+    },
+    {
+        key: "arrival",
+        label: "Arrival",
+        icon: PlaneLanding,
+        children: [
+            {
+                label: "Bus Weekend",
+                icon: Bus,
+            },
+            {
+                label: "Airport",
+                icon: PlaneLanding,
+            },
+        ],
     },
 ];
 
@@ -34,12 +141,12 @@ const Sidebar = ({ isOpen }) => {
         <div
             className={`h-screen ${
                 isOpen ? "w-64" : "w-20"
-            } bg-gradient-to-b from-white to-purple-50 backdrop-blur-lg border-r border-purple-100 transition-all duration-300 flex flex-col shadow-[6px_0_30px_rgba(139,92,246,0.15)]`}
+            } bg-gradient-to-b from-white to-[#eef5fc] border-r border-[#d6e6f5] transition-all duration-300 flex flex-col`}
         >
             {/* LOGO */}
             <div className="p-4 flex items-center justify-center">
-                <span className="text-purple-500 font-extrabold text-xl tracking-wide">
-                    {isOpen ? "MyApp" : "M"}
+                <span className="text-[#045db0] font-extrabold text-xl">
+                    {isOpen ? "POLL TRANSPORT" : "TBS"}
                 </span>
             </div>
 
@@ -52,19 +159,25 @@ const Sidebar = ({ isOpen }) => {
                             const isOpenMenu = openMenu === item.key;
 
                             return (
-                                <div key={item.key}>
-                                    {/* MAIN BUTTON */}
+                                <div
+                                    key={item.key}
+                                    className="border-b border-[#dbe7f3] pb-2 mb-2 last:border-b-0"
+                                >
+                                    {/* MAIN MENU */}
                                     <button
                                         onClick={() => {
                                             setActive(item.key);
-                                            if (item.children) toggleMenu(item.key);
+
+                                            if (item.children) {
+                                                toggleMenu(item.key);
+                                            }
                                         }}
                                         className={`flex items-center justify-between w-full p-3 rounded-xl transition-all
-                      ${
-                          isActive
-                              ? "bg-purple-500 text-white shadow-md"
-                              : "hover:bg-purple-100 text-gray-700"
-                      }`}
+                                        ${
+                                            isActive
+                                                ? "bg-[#045db0] text-white"
+                                                : "hover:bg-[#e6f0fa] text-gray-700"
+                                        }`}
                                     >
                                         <span className="flex items-center gap-3">
                                             <Icon size={18} />
@@ -74,7 +187,7 @@ const Sidebar = ({ isOpen }) => {
                                         {item.children && (
                                             <ChevronDown
                                                 size={16}
-                                                className={`transition ${
+                                                className={`transition-transform duration-200 ${
                                                     isOpenMenu ? "rotate-180" : ""
                                                 }`}
                                             />
@@ -83,15 +196,20 @@ const Sidebar = ({ isOpen }) => {
 
                                     {/* CHILD MENU */}
                                     {item.children && isOpenMenu && (
-                                        <div className="ml-8 mt-2 space-y-1 text-sm">
-                                            {item.children.map((child, idx) => (
-                                                <p
-                                                    key={idx}
-                                                    className="hover:text-purple-500 cursor-pointer transition"
-                                                >
-                                                    {child}
-                                                </p>
-                                            ))}
+                                        <div className="ml-6 mt-2 space-y-1">
+                                            {item.children.map((child, idx) => {
+                                                const ChildIcon = child.icon;
+
+                                                return (
+                                                    <button
+                                                        key={idx}
+                                                        className="flex items-center gap-3 w-full p-2 rounded-lg text-sm text-gray-600 hover:bg-[#e6f0fa] hover:text-[#045db0] transition-all"
+                                                    >
+                                                        <ChildIcon size={16} />
+                                                        {child.label}
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     )}
                                 </div>
@@ -102,12 +220,13 @@ const Sidebar = ({ isOpen }) => {
                     <div className="flex flex-col items-center gap-5 mt-6">
                         {menuItems.map((item, i) => {
                             const Icon = item.icon;
+
                             return (
                                 <div
                                     key={i}
-                                    className="p-3 rounded-xl hover:bg-purple-100 cursor-pointer transition-all hover:scale-110"
+                                    className="p-3 rounded-xl hover:bg-[#e6f0fa] cursor-pointer transition-all hover:scale-110"
                                 >
-                                    <Icon size={20} className="text-purple-500" />
+                                    <Icon size={20} className="text-[#045db0]" />
                                 </div>
                             );
                         })}

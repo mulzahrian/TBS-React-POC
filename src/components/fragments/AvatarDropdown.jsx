@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { LogOut, Settings, User } from "lucide-react";
-import profile from "../../assets/images/best_mentri.jpg";
+import profile from "../../assets/images/avatar.png";
 
 const AvatarDropdown = () => {
     const [open, setOpen] = useState(false);
@@ -38,10 +38,10 @@ const AvatarDropdown = () => {
 
             {open && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2">
-                    <button className="flex items-center gap-2 w-full px-4 py-2 hover:bg-purple-100">
+                    <button className="flex items-center gap-2 w-full px-4 py-2 hover:bg-blue-400">
                         <User size={16} /> Profile
                     </button>
-                    <button className="flex items-center gap-2 w-full px-4 py-2 hover:bg-purple-100">
+                    <button className="flex items-center gap-2 w-full px-4 py-2 hover:bg-blue-400">
                         <Settings size={16} /> Settings
                     </button>
                     <hr className="my-2" />
