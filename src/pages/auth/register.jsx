@@ -3,7 +3,7 @@ import FormRegister from "../../components/fragments/FormRegister";
 
 const RegisterPage = () => {
     return (
-        <AuthLayouts title="Register" type="register">
+        <AuthLayouts title="Forgot Password" type="register">
             <FormRegister />
         </AuthLayouts>
     );

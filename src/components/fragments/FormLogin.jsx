@@ -39,7 +39,12 @@ const FormLogin = () => {
                     message={loginFailed}
                 />
             )}
-            <InputForm label="Name" name="name" type="text" placeholder="Enter your name" />
+            <InputForm
+                label="Name"
+                name="name"
+                type="text"
+                placeholder="Enter Globalnet ID or SAP ID"
+            />
             <InputForm
                 label="Password"
                 name="password"
