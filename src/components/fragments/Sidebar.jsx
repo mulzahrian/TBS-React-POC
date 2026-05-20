@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import MenuCard from "./MenuCard";
 
 import {
@@ -34,29 +34,40 @@ const menuItems = [
         icon: Users,
         children: [
             {
+                key: "business-units",
                 label: "Business Units",
                 icon: Building2,
                 path: "/business-units",
             },
             {
+                key: "departments",
                 label: "Departments",
                 icon: Briefcase,
+                path: "/departments",
             },
             {
+                key: "user-types",
                 label: "User Types",
                 icon: UserCog,
+                path: "/user-types",
             },
             {
+                key: "privilages",
                 label: "Privilages",
                 icon: ShieldCheck,
+                path: "/privilages",
             },
             {
+                key: "role",
                 label: "Role",
                 icon: Users,
+                path: "/role",
             },
             {
+                key: "system-values",
                 label: "System Values",
                 icon: Settings,
+                path: "/system-values",
             },
         ],
     },
@@ -66,32 +77,46 @@ const menuItems = [
         icon: Bell,
         children: [
             {
+                key: "employees",
                 label: "Employees",
                 icon: Users,
+                path: "/employees",
             },
             {
+                key: "vehicles",
                 label: "Vehicles",
                 icon: Car,
+                path: "/vehicles",
             },
             {
+                key: "drivers",
                 label: "Drivers",
                 icon: IdCard,
+                path: "/drivers",
             },
             {
+                key: "schedules-bus",
                 label: "Schedules Bus",
                 icon: CalendarDays,
+                path: "/schedules-bus",
             },
             {
+                key: "schedules-airport",
                 label: "Schedules Airport",
                 icon: PlaneTakeoff,
+                path: "/schedules-airport",
             },
             {
+                key: "manifest-bus",
                 label: "Manifest Bus",
                 icon: ClipboardList,
+                path: "/manifest-bus",
             },
             {
+                key: "manifest-airport",
                 label: "Manifest Airport",
                 icon: PlaneLanding,
+                path: "/manifest-airport",
             },
         ],
     },
@@ -99,6 +124,7 @@ const menuItems = [
         key: "booking",
         label: "My Booking",
         icon: Bus,
+        path: "/booking",
     },
     {
         key: "departure",
@@ -106,12 +132,16 @@ const menuItems = [
         icon: PlaneTakeoff,
         children: [
             {
+                key: "departure-bus",
                 label: "Bus Weekend",
                 icon: Bus,
+                path: "/departure-bus",
             },
             {
+                key: "departure-airport",
                 label: "Airport",
                 icon: PlaneTakeoff,
+                path: "/departure-airport",
             },
         ],
     },
@@ -121,12 +151,16 @@ const menuItems = [
         icon: PlaneLanding,
         children: [
             {
+                key: "arrival-bus",
                 label: "Bus Weekend",
                 icon: Bus,
+                path: "/arrival-bus",
             },
             {
+                key: "arrival-airport",
                 label: "Airport",
                 icon: PlaneLanding,
+                path: "/arrival-airport",
             },
         ],
     },
@@ -134,8 +168,25 @@ const menuItems = [
 
 const Sidebar = ({ isOpen }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [openMenu, setOpenMenu] = useState(null);
-    const [active, setActive] = useState("dashboard");
+
+    // ACTIVE BERDASARKAN URL
+    const activePath = location.pathname;
+
+    // AUTO OPEN PARENT MENU
+    useEffect(() => {
+        menuItems.forEach((item) => {
+            if (item.children) {
+                const hasActiveChild = item.children.some((child) => child.path === activePath);
+
+                if (hasActiveChild) {
+                    setOpenMenu(item.key);
+                }
+            }
+        });
+    }, [activePath]);
 
     const toggleMenu = (key) => {
         setOpenMenu(openMenu === key ? null : key);
@@ -159,7 +210,11 @@ const Sidebar = ({ isOpen }) => {
                     <MenuCard title="Main Menu">
                         {menuItems.map((item) => {
                             const Icon = item.icon;
-                            const isActive = active === item.key;
+
+                            const isMainActive =
+                                item.path === activePath ||
+                                item.children?.some((child) => child.path === activePath);
+
                             const isOpenMenu = openMenu === item.key;
 
                             return (
@@ -170,8 +225,6 @@ const Sidebar = ({ isOpen }) => {
                                     {/* MAIN MENU */}
                                     <button
                                         onClick={() => {
-                                            setActive(item.key);
-
                                             if (item.children) {
                                                 toggleMenu(item.key);
                                             }
@@ -182,8 +235,8 @@ const Sidebar = ({ isOpen }) => {
                                         }}
                                         className={`flex items-center justify-between w-full p-3 rounded-xl transition-all
                                         ${
-                                            isActive
-                                                ? "bg-[#045db0] text-white"
+                                            isMainActive
+                                                ? "bg-[#045db0] text-white shadow-md"
                                                 : "hover:bg-[#e6f0fa] text-gray-700"
                                         }`}
                                     >
@@ -205,14 +258,21 @@ const Sidebar = ({ isOpen }) => {
                                     {/* CHILD MENU */}
                                     {item.children && isOpenMenu && (
                                         <div className="ml-6 mt-2 space-y-1">
-                                            {item.children.map((child, idx) => {
+                                            {item.children.map((child) => {
                                                 const ChildIcon = child.icon;
+
+                                                const isChildActive = child.path === activePath;
 
                                                 return (
                                                     <button
-                                                        key={idx}
+                                                        key={child.key}
                                                         onClick={() => navigate(child.path)}
-                                                        className="flex items-center gap-3 w-full p-2 rounded-lg text-sm text-gray-600 hover:bg-[#e6f0fa] hover:text-[#045db0] transition-all"
+                                                        className={`flex items-center gap-3 w-full p-2 rounded-lg text-sm transition-all
+                                                        ${
+                                                            isChildActive
+                                                                ? "bg-[#dbeafe] text-[#045db0] font-semibold"
+                                                                : "text-gray-600 hover:bg-[#e6f0fa] hover:text-[#045db0]"
+                                                        }`}
                                                     >
                                                         <ChildIcon size={16} />
                                                         {child.label}
@@ -230,12 +290,31 @@ const Sidebar = ({ isOpen }) => {
                         {menuItems.map((item, i) => {
                             const Icon = item.icon;
 
+                            const isMainActive =
+                                item.path === activePath ||
+                                item.children?.some((child) => child.path === activePath);
+
                             return (
                                 <div
                                     key={i}
-                                    className="p-3 rounded-xl hover:bg-[#e6f0fa] cursor-pointer transition-all hover:scale-110"
+                                    onClick={() => {
+                                        if (item.path) {
+                                            navigate(item.path);
+                                        }
+
+                                        if (item.children) {
+                                            toggleMenu(item.key);
+                                        }
+                                    }}
+                                    className={`p-3 rounded-xl cursor-pointer transition-all hover:scale-110
+                                    ${isMainActive ? "bg-[#045db0]" : "hover:bg-[#e6f0fa]"}`}
                                 >
-                                    <Icon size={20} className="text-[#045db0]" />
+                                    <Icon
+                                        size={20}
+                                        className={`${
+                                            isMainActive ? "text-white" : "text-[#045db0]"
+                                        }`}
+                                    />
                                 </div>
                             );
                         })}
