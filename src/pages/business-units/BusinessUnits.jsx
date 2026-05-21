@@ -1,13 +1,9 @@
 import { Fragment } from "react";
 import MainLayout from "../../components/layout/MainLayout";
 import PageContainer from "../../components/fragments/PageContainer";
+import SearchInput from "../../components/elements/Input/searchInput";
 
-import {
-    Search,
-    ChevronLeft,
-    ChevronRight,
-    FileSpreadsheet,
-} from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, FileSpreadsheet } from "lucide-react";
 
 import Button from "../../components/elements/Button";
 
@@ -74,11 +70,7 @@ const BusinessUnits = () => {
                     className={`
                         px-3 py-1 rounded-full
                         text-xs font-semibold
-                        ${
-                            row.status
-                                ? "bg-green-100 text-green-700"
-                                : "bg-red-100 text-red-700"
-                        }
+                        ${row.status ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}
                     `}
                 >
                     {row.status ? "Active" : "Inactive"}
@@ -89,14 +81,9 @@ const BusinessUnits = () => {
             header: "Action",
             render: () => (
                 <div className="flex items-center gap-2">
-                    <Button className="h-8 text-xs px-4">
-                        Detail
-                    </Button>
+                    <Button className="h-8 text-xs px-4">Detail</Button>
 
-                    <Button
-                        variant="danger"
-                        className="h-8 text-xs px-4"
-                    >
+                    <Button variant="danger" className="h-8 text-xs px-4">
                         Delete
                     </Button>
                 </div>
@@ -109,15 +96,11 @@ const BusinessUnits = () => {
             <PageContainer title="Business Units">
                 <Fragment>
                     <div className="space-y-5">
-
                         {/* Header */}
                         <div className="flex items-center justify-between">
-                            <h1 className="text-2xl font-bold text-gray-800">
-                                Business Unit List
-                            </h1>
+                            <h1 className="text-2xl font-bold text-gray-800">Business Unit List</h1>
 
                             <div className="flex items-center gap-3">
-
                                 {/* Excel */}
                                 <button
                                     className="
@@ -140,72 +123,35 @@ const BusinessUnits = () => {
                                         shadow-sm
                                     "
                                 >
-                                    <span className="text-lg leading-none">
-                                        +
-                                    </span>
-
+                                    <span className="text-lg leading-none">+</span>
                                     Add
                                 </Button>
                             </div>
                         </div>
 
                         {/* Search */}
-                        <div className="flex items-center justify-between">
-                            <div className="relative w-full max-w-sm">
-                                <Search
-                                    size={18}
-                                    className="
-                                        absolute
-                                        left-3
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-400
-                                    "
-                                />
-
-                                <input
-                                    type="text"
-                                    placeholder="Search..."
-                                    className="
-                                        w-full
-                                        h-10
-                                        pl-10
-                                        pr-4
-                                        rounded-lg
-                                        border
-                                        bg-white
-                                        outline-none
-                                        focus:ring-2
-                                        focus:ring-[#045db0]
-                                    "
-                                />
-                            </div>
-                        </div>
+                        <SearchInput name="search" placeholder="Search business unit..." />
 
                         {/* Table */}
                         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
                             <div className="overflow-x-auto">
-
                                 <table className="min-w-full text-sm text-left">
-
                                     {/* Table Header */}
                                     <thead className="bg-[#045db0]">
                                         <tr>
-                                            {columns.map(
-                                                (column, index) => (
-                                                    <th
-                                                        key={index}
-                                                        className="
+                                            {columns.map((column, index) => (
+                                                <th
+                                                    key={index}
+                                                    className="
                                                             px-6 py-4
                                                             text-white
                                                             font-semibold
                                                             whitespace-nowrap
                                                         "
-                                                    >
-                                                        {column.header}
-                                                    </th>
-                                                )
-                                            )}
+                                                >
+                                                    {column.header}
+                                                </th>
+                                            ))}
                                         </tr>
                                     </thead>
 
@@ -224,26 +170,19 @@ const BusinessUnits = () => {
                                                     }
                                                 `}
                                             >
-                                                {columns.map(
-                                                    (column, colIndex) => (
-                                                        <td
-                                                            key={colIndex}
-                                                            className="
+                                                {columns.map((column, colIndex) => (
+                                                    <td
+                                                        key={colIndex}
+                                                        className="
                                                                 px-6 py-4
                                                                 text-gray-700
                                                             "
-                                                        >
-                                                            {column.render
-                                                                ? column.render(
-                                                                      row,
-                                                                      index
-                                                                  )
-                                                                : row[
-                                                                      column.accessor
-                                                                  ]}
-                                                        </td>
-                                                    )
-                                                )}
+                                                    >
+                                                        {column.render
+                                                            ? column.render(row, index)
+                                                            : row[column.accessor]}
+                                                    </td>
+                                                ))}
                                             </tr>
                                         ))}
                                     </tbody>
@@ -260,7 +199,6 @@ const BusinessUnits = () => {
                                     bg-white
                                 "
                             >
-
                                 {/* Show Entries */}
                                 <div className="flex items-center gap-2 text-sm text-gray-500">
                                     <span>Show</span>
@@ -287,7 +225,6 @@ const BusinessUnits = () => {
 
                                 {/* Pagination */}
                                 <div className="flex items-center gap-3">
-
                                     <button
                                         className="
                                             h-9 w-9
