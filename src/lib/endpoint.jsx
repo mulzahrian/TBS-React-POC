@@ -1,4 +1,6 @@
 //EndPoint list
+export const API_URL = "http://172.20.63.74:9999/api";
+
 export const ENDPOINTS = {
     AUTH: {
         LOGIN: "/auth/login",
@@ -9,5 +11,8 @@ export const ENDPOINTS = {
     },
     PRODUCT: {
         GETPRODUCT: "/products",
+    },
+    HRBUSINESSUNIT: {
+        GETBUSINESSUNIT: "/hr-business-units",
     },
 };

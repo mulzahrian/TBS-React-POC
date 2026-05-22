@@ -12,14 +12,14 @@ const FormLogin = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         const credentials = {
-            username: e.target.name.value,
-            password: e.target.password.value,
+            USER_NAME: e.target.name.value,
+            USER_PASSWORD: e.target.password.value,
         };
         login(credentials, (status, res) => {
             if (status) {
-                console.log("Login successful:", res.data.token);
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("email", credentials.username);
+                console.log("Login successful:", res.data.data.token);
+                localStorage.setItem("token", res.data.data.token);
+                localStorage.setItem("email", credentials.USER_NAME);
                 navigate("/dashboard");
             } else {
                 setLoginFailed(res.response.data || "Login failed");
