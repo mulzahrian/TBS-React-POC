@@ -8,6 +8,7 @@ import Button from "../../components/elements/Button";
 
 import { ChevronLeft, ChevronRight, FileSpreadsheet } from "lucide-react";
 import useBusinessUnits from "../../hooks/useBusinessUnits";
+import FormModal from "../../components/fragments/FormModal";
 
 const BusinessUnits = () => {
     const {
@@ -23,7 +24,31 @@ const BusinessUnits = () => {
         setSearch,
 
         paging,
+
+        openModal,
+        setOpenModal,
     } = useBusinessUnits();
+
+    const fields = [
+    {
+        label: "Business Unit Code",
+        name: "BU_CODE",
+        type: "text",
+        placeholder: "Input business unit code",
+    },
+    {
+        label: "Business Unit Name",
+        name: "BU_NAME",
+        type: "text",
+        placeholder: "Input business unit name",
+    },
+    {
+        label: "Description",
+        name: "BU_DESC",
+        type: "text",
+        placeholder: "Input description",
+    },
+];
 
     const columns = [
         {
@@ -91,7 +116,10 @@ const BusinessUnits = () => {
                                 <Button className="h-8 px-3 text-sm flex items-center gap-2 shadow-sm">
                                     <FileSpreadsheet size={16} />
                                 </Button>
-                                <Button className="px-4 flex items-center gap-2 shadow-sm">
+                                <Button
+                                    className="px-4 flex items-center gap-2 shadow-sm"
+                                    onClick={() => setOpenModal(true)}
+                                >
                                     <span className="text-lg leading-none">+</span>
                                     Add
                                 </Button>
@@ -240,6 +268,27 @@ const BusinessUnits = () => {
                     </div>
                 </Fragment>
             </PageContainer>
+            <FormModal
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            title="Add Business Unit"
+            fields={fields}
+            onSubmit={(e) => {
+                e.preventDefault();
+
+                const formData = new FormData(e.target);
+
+                const payload = {
+                    BU_CODE: formData.get("BU_CODE"),
+                    BU_NAME: formData.get("BU_NAME"),
+                    BU_DESC: formData.get("BU_DESC"),
+                };
+
+                console.log(payload);
+
+                setOpenModal(false);
+            }}
+        />
         </MainLayout>
     );
 };

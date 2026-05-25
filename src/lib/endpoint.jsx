@@ -1,5 +1,5 @@
 //EndPoint list
-export const API_URL = "http://172.20.63.74:9999/api";
+export const API_URL = "http://localhost:9999/api";
 
 export const ENDPOINTS = {
     AUTH: {

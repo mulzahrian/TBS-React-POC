@@ -4,6 +4,8 @@ import { getBusinessUnits } from "../services/businessUnit.service";
 const useBusinessUnits = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -51,6 +53,9 @@ const useBusinessUnits = () => {
         setSearch,
 
         paging,
+
+        openModal,
+        setOpenModal,
 
         refetch: fetchBusinessUnits,
     };
