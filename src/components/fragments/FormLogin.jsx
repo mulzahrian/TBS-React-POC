@@ -22,9 +22,9 @@ const FormLogin = () => {
                 localStorage.setItem("email", credentials.USER_NAME);
                 navigate("/dashboard");
             } else {
-                setLoginFailed(res.response.data || "Login failed");
+                setLoginFailed(res?.response?.data?.message || "Login failed");
                 setErrorKey((prev) => prev + 1);
-                console.error("Login failed:", res.response.data);
+                console.error("Login failed:", res?.response?.data);
             }
         });
     };

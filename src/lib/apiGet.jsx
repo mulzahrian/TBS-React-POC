@@ -1,8 +1,8 @@
-import axios from "axios";
+import apiClient from "./apiClient";
 
 const apiGet = async ({ url, params = {}, headers = {} }) => {
     try {
-        const response = await axios.get(url, {
+        const response = await apiClient.get(url, {
             params,
             headers,
         });

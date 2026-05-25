@@ -10,6 +10,7 @@ const login = (credentials, callback) => {
             callback(true, response);
         })
         .catch((error) => {
+            console.error("Login error:", error);
             callback(false, error);
         });
 };
