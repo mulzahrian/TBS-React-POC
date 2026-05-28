@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, XCircle, X } from "lucide-react";
 
-const Alert = ({
-    variant = "success", // success | error
-    size = "md", // sm | md | lg
-    title = "",
-    message = "",
-    onClose,
-}) => {
+const Alert = ({ variant = "success", size = "md", title = "", message = "", onClose }) => {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
@@ -15,49 +9,99 @@ const Alert = ({
 
         const timer = setTimeout(() => {
             setVisible(false);
+
             onClose && onClose();
         }, 5000);
 
         return () => clearTimeout(timer);
-    }, [message, onClose]);
+    }, [message]);
 
     if (!visible) return null;
 
-    const variantStyle = {
-        success: "bg-green-100 text-green-700 border-green-300",
-        error: "bg-red-100 text-red-700 border-red-300",
+    const variants = {
+        success: {
+            container: "bg-green-50 border-green-200",
+            icon: "text-green-600",
+            title: "text-green-700",
+            message: "text-green-600",
+        },
+
+        error: {
+            container: "bg-red-50 border-red-200",
+            icon: "text-red-600",
+            title: "text-red-700",
+            message: "text-red-600",
+        },
     };
 
-    const sizeStyle = {
-        sm: "max-w-xs text-sm",
-        md: "max-w-md text-base",
-        lg: "max-w-lg text-lg",
+    const sizes = {
+        sm: "max-w-xs",
+        md: "max-w-md",
+        lg: "max-w-lg",
     };
 
     const icons = {
         success: <CheckCircle className="w-5 h-5" />,
+
         error: <XCircle className="w-5 h-5" />,
     };
 
     return (
-        <div className="w-full flex justify-center fixed top-5 left-0 z-50 px-4">
+        <div
+            className="
+                fixed top-5 left-0
+                w-full
+                flex justify-center
+                z-50
+                px-4
+            "
+        >
             <div
-                className={`w-full ${sizeStyle[size]} border rounded-xl shadow-md p-4 ${variantStyle[variant]} bg-white`}
+                className={`
+                    w-full
+                    ${sizes[size]}
+                    rounded-2xl
+                    border
+                    shadow-lg
+                    p-4
+
+                    ${variants[variant].container}
+                `}
             >
-                <div className="flex justify-between items-start gap-3">
+                <div className="flex items-start gap-3">
                     {/* Icon */}
-                    <div>{icons[variant]}</div>
+                    <div className={variants[variant].icon}>{icons[variant]}</div>
 
                     {/* Content */}
                     <div className="flex-1">
-                        {title && <p className="font-semibold">{title}</p>}
-                        <p>{message}</p>
+                        {title && (
+                            <p
+                                className={`
+                                    font-semibold
+                                    ${variants[variant].title}
+                                `}
+                            >
+                                {title}
+                            </p>
+                        )}
+
+                        <p
+                            className={`
+                                text-sm mt-1
+                                ${variants[variant].message}
+                            `}
+                        >
+                            {message}
+                        </p>
                     </div>
 
-                    {/* Close button */}
+                    {/* Close */}
                     <button
                         onClick={() => setVisible(false)}
-                        className="text-gray-400 hover:text-gray-600"
+                        className="
+                            text-gray-400
+                            hover:text-gray-600
+                        "
                     >
                         <X className="w-4 h-4" />
                     </button>

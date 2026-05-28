@@ -11,7 +11,7 @@ import ProductsPage from "./pages/products.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import DetailProductPage from "./pages/detailProduct.jsx";
 import Profile from "./pages/profile.jsx";
-import BusinessUnits from "./pages/business-units/BusinessUnits.jsx";
+import BusinessUnits from "./pages/business-units/index.jsx";
 import Departments from "./pages/departments/Department.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import GlobalTokenExpiredModal from "./components/elements/Modal/GlobalTokenExpiredModal.jsx";

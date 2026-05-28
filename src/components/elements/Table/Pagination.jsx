@@ -1,29 +1,91 @@
-import Button from "../Button";
+// components/elements/Table/Pagination.jsx
 
-const Pagination = ({ paging, onPageChange }) => {
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const Pagination = ({
+    paging,
+    onPageChange,
+
+    limit,
+    onLimitChange,
+}) => {
     return (
-        <div className="flex items-center justify-between p-4 border-t">
-            <div className="text-sm text-gray-500">
-                Page {paging.page} of {paging.totalPages}
+        <div
+            className="
+                flex items-center
+                justify-between
+                px-6 py-4
+                bg-white
+            "
+        >
+            {/* Left */}
+            <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-500">Show</span>
+
+                <select
+                    value={limit}
+                    onChange={(e) => onLimitChange(Number(e.target.value))}
+                    className="
+                        h-10 px-3
+                        rounded-xl
+                        border border-gray-200
+                        bg-white
+                        text-sm
+                        outline-none
+                        focus:border-[#045db0]
+                    "
+                >
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                </select>
+
+                <span className="text-sm text-gray-500">entries</span>
             </div>
 
-            <div className="flex gap-2">
-                <Button
-                    variant="secondary"
-                    className="h-9"
+            {/* Right */}
+            <div className="flex items-center gap-3">
+                <button
                     onClick={() => onPageChange(paging.page - 1)}
                     disabled={paging.page <= 1}
+                    className="
+                        h-10 w-10
+                        rounded-xl
+                        bg-gray-100
+                        hover:bg-gray-200
+                        transition
+                        flex items-center justify-center
+                        disabled:opacity-40
+                    "
                 >
-                    Prev
-                </Button>
+                    <ChevronLeft size={18} />
+                </button>
 
-                <Button
-                    className="h-9"
+                <div
+                    className="
+                        text-sm font-semibold
+                        text-gray-700
+                    "
+                >
+                    {paging.page} / {paging.totalPages}
+                </div>
+
+                <button
                     onClick={() => onPageChange(paging.page + 1)}
                     disabled={paging.page >= paging.totalPages}
+                    className="
+                        h-10 w-10
+                        rounded-xl
+                        bg-[#045db0]
+                        text-white
+                        hover:opacity-90
+                        transition
+                        flex items-center justify-center
+                        disabled:opacity-40
+                    "
                 >
-                    Next
-                </Button>
+                    <ChevronRight size={18} />
+                </button>
             </div>
         </div>
     );

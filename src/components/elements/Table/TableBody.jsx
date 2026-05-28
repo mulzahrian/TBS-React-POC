@@ -1,9 +1,18 @@
-const TableBody = ({ columns, data, loading }) => {
+// components/elements/Table/TableBody.jsx
+
+const TableBody = ({ columns, data, loading, rowKey, emptyMessage }) => {
     if (loading) {
         return (
             <tbody>
                 <tr>
-                    <td colSpan={columns.length} className="text-center py-10">
+                    <td
+                        colSpan={columns.length}
+                        className="
+                            text-center
+                            py-14
+                            text-gray-500
+                        "
+                    >
                         Loading...
                     </td>
                 </tr>
@@ -15,8 +24,15 @@ const TableBody = ({ columns, data, loading }) => {
         return (
             <tbody>
                 <tr>
-                    <td colSpan={columns.length} className="text-center py-10 text-gray-500">
-                        No Data
+                    <td
+                        colSpan={columns.length}
+                        className="
+                            text-center
+                            py-14
+                            text-gray-400
+                        "
+                    >
+                        {emptyMessage}
                     </td>
                 </tr>
             </tbody>
@@ -26,9 +42,23 @@ const TableBody = ({ columns, data, loading }) => {
     return (
         <tbody>
             {data.map((row, index) => (
-                <tr key={row.user_id || index} className="border-t hover:bg-gray-50">
-                    {columns.map((column) => (
-                        <td key={column.accessor} className="px-4 py-3">
+                <tr
+                    key={row[rowKey] || index}
+                    className={`
+                        transition-all duration-200
+                        hover:bg-blue-100/60
+
+                        ${index % 2 === 0 ? "bg-white" : "bg-blue-50/40"}
+                    `}
+                >
+                    {columns.map((column, colIndex) => (
+                        <td
+                            key={column.accessor || colIndex}
+                            className="
+                                px-6 py-4
+                                text-gray-700
+                            "
+                        >
                             {column.render ? column.render(row, index) : row[column.accessor]}
                         </td>
                     ))}
