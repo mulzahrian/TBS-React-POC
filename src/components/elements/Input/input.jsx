@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 const Input = (props) => {
-    const { type, placeholder, name } = props;
+    const { type, placeholder, name, defaultValue } = props;
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -14,6 +14,7 @@ const Input = (props) => {
                 type={isPassword ? (showPassword ? "text" : "password") : type}
                 id={name}
                 name={name}
+                defaultValue={defaultValue}
                 className="
                     text-sm border rounded-full py-2 px-5
                     text-slate-700 placeholder:opacity-50

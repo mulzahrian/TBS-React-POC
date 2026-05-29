@@ -2,40 +2,22 @@ import Modal from "../elements/Modal";
 import InputForm from "../../components/elements/Input/input";
 import Button from "../elements/Button/";
 
-const FormModal = ({
-    open,
-    onClose,
-    title,
-    fields = [],
-    onSubmit,
-}) => {
+const FormModal = ({ open, onClose, title, fields = [], onSubmit, defaultValues = {} }) => {
     return (
-        <Modal
-            open={open}
-            onClose={onClose}
-            title={title}
-        >
-            <form
-                onSubmit={onSubmit}
-                className="space-y-6"
-            >
+        <Modal open={open} onClose={onClose} title={title}>
+            <form onSubmit={onSubmit} className="space-y-6">
                 {/* Form Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {fields.map((field, index) => {
-                        const isLastOdd =
-                            fields.length % 2 !== 0 &&
-                            index === fields.length - 1;
+                        const isLastOdd = fields.length % 2 !== 0 && index === fields.length - 1;
 
                         return (
-                            <div
-                                key={index}
-                                className={isLastOdd ? "md:col-span-2" : ""}
-                            >
+                            <div key={index} className={isLastOdd ? "md:col-span-2" : ""}>
                                 <InputForm
                                     label={field.label}
                                     name={field.name}
                                     type={field.type}
-                                    placeholder={field.placeholder}
+                                    defaultValue={defaultValues?.[field.name] || ""}
                                 />
                             </div>
                         );

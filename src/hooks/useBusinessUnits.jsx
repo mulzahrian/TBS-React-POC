@@ -6,10 +6,17 @@ const useBusinessUnits = () => {
     const [loading, setLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
 
-
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [search, setSearch] = useState("");
+    const [selectedData, setSelectedData] = useState(null);
+    const [formMode, setFormMode] = useState("create");
+    const [alert, setAlert] = useState({
+        open: false,
+        variant: "success",
+        title: "",
+        message: "",
+    });
 
     const [paging, setPaging] = useState({
         total: 0,
@@ -57,6 +64,14 @@ const useBusinessUnits = () => {
         openModal,
         setOpenModal,
 
+        selectedData,
+        setSelectedData,
+
+        formMode,
+        setFormMode,
+
+        alert,
+        setAlert,
         refetch: fetchBusinessUnits,
     };
 };

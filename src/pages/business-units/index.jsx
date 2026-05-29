@@ -10,7 +10,11 @@ import useBusinessUnits from "../../hooks/useBusinessUnits";
 import FormModal from "../../components/fragments/FormModal";
 import { businessUnitColumns } from "./businessUnit.columns";
 import { businessUnitFields } from "./businessUnit.fields";
-import { createBusinessUnit } from "../../services/businessUnit.service";
+import {
+    createBusinessUnit,
+    getBusinessUnitById,
+    updateBusinessUnit,
+} from "../../services/businessUnit.service";
 
 const BusinessUnits = () => {
     const {
@@ -24,15 +28,29 @@ const BusinessUnits = () => {
         paging,
         openModal,
         setOpenModal,
+        alert,
+        setAlert,
+        selectedData,
+        setSelectedData,
+        formMode,
+        setFormMode,
         refetch,
     } = useBusinessUnits();
 
-    const [alert, setAlert] = useState({
-        open: false,
-        variant: "success",
-        title: "",
-        message: "",
-    });
+    const handleEdit = async (id) => {
+        try {
+            const response = await getBusinessUnitById(id);
+            console.log(response);
+
+            setSelectedData(response);
+
+            setFormMode("edit");
+
+            setOpenModal(true);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <MainLayout>
@@ -79,6 +97,7 @@ const BusinessUnits = () => {
                     columns={businessUnitColumns({
                         page,
                         limit,
+                        onEdit: handleEdit,
                     })}
                     data={data}
                     loading={loading}
@@ -94,10 +113,28 @@ const BusinessUnits = () => {
 
                 {/* Modal */}
                 <FormModal
+                    key={selectedData?.BU_ID || "create"}
                     open={openModal}
-                    onClose={() => setOpenModal(false)}
-                    title="Add Business Unit"
+                    onClose={() => {
+                        setOpenModal(false);
+
+                        setSelectedData(null);
+
+                        setFormMode("create");
+                    }}
+                    title={formMode === "create" ? "Add Business Unit" : "Edit Business Unit"}
                     fields={businessUnitFields}
+                    defaultValues={
+                        selectedData
+                            ? {
+                                  BU_CODE: selectedData.BU_CODE,
+
+                                  BU_NAME: selectedData.BU_NAME,
+
+                                  BU_DESC: selectedData.BU_DESC,
+                              }
+                            : {}
+                    }
                     onSubmit={async (e) => {
                         e.preventDefault();
 
@@ -106,11 +143,21 @@ const BusinessUnits = () => {
 
                             const payload = {
                                 bu_code: formData.get("BU_CODE"),
+
                                 bu_name: formData.get("BU_NAME"),
+
                                 bu_desc: formData.get("BU_DESC"),
+
+                                is_active: true,
                             };
 
-                            const response = await createBusinessUnit(payload);
+                            let response;
+
+                            if (formMode === "create") {
+                                response = await createBusinessUnit(payload);
+                            } else {
+                                response = await updateBusinessUnit(selectedData.BU_ID, payload);
+                            }
 
                             refetch();
 
@@ -122,6 +169,10 @@ const BusinessUnits = () => {
                             });
 
                             setOpenModal(false);
+
+                            setSelectedData(null);
+
+                            setFormMode("create");
                         } catch (error) {
                             console.error(error);
 
