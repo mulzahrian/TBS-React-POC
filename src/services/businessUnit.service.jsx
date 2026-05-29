@@ -1,6 +1,7 @@
 import apiGet from "../lib/apiGet";
 import apiPost from "../lib/apiPost";
 import apiPut from "../lib/apiPut";
+import apiClient from "../lib/apiClient";
 
 import { API_URL, ENDPOINTS } from "../lib/endpoint";
 
@@ -61,4 +62,19 @@ export const updateBusinessUnit = async (id, payload) => {
     });
 
     return response;
+};
+
+export const deleteBusinessUnit = async (id) => {
+    const token = localStorage.getItem("token");
+
+    const response = await apiClient.delete(
+        `${API_URL}${ENDPOINTS.HRBUSINESSUNIT.GETBUSINESSUNIT}/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+
+    return response.data;
 };

@@ -1,8 +1,19 @@
 import Modal from "../elements/Modal";
 import InputForm from "../../components/elements/Input/input";
 import Button from "../elements/Button/";
+import Toggle from "../elements/Toggle";
 
-const FormModal = ({ open, onClose, title, fields = [], onSubmit, defaultValues = {} }) => {
+const FormModal = ({
+    open,
+    onClose,
+    title,
+    fields = [],
+    onSubmit,
+    defaultValues = {},
+    formMode,
+    isActive,
+    setIsActive,
+}) => {
     return (
         <Modal open={open} onClose={onClose} title={title}>
             <form onSubmit={onSubmit} className="space-y-6">
@@ -17,12 +28,24 @@ const FormModal = ({ open, onClose, title, fields = [], onSubmit, defaultValues 
                                     label={field.label}
                                     name={field.name}
                                     type={field.type}
+                                    placeholder={field.placeholder}
                                     defaultValue={defaultValues?.[field.name] || ""}
                                 />
                             </div>
                         );
                     })}
                 </div>
+                {/* Toggle Active */}
+                {formMode === "edit" && (
+                    <div className="pt-2">
+                        <Toggle
+                            name="is_active"
+                            checked={isActive}
+                            onChange={setIsActive}
+                            label={isActive ? "Active" : "Inactive"}
+                        />
+                    </div>
+                )}
 
                 {/* Footer */}
                 <div

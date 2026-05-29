@@ -1,6 +1,7 @@
 import Button from "../../components/elements/Button";
+import { Pencil, Trash2 } from "lucide-react";
 
-export const businessUnitColumns = ({ page, limit, onEdit }) => [
+export const businessUnitColumns = ({ page, limit, onEdit, onDelete }) => [
     {
         header: "No",
         render: (row, index) => (page - 1) * limit + index + 1,
@@ -42,12 +43,18 @@ export const businessUnitColumns = ({ page, limit, onEdit }) => [
         header: "Action",
         render: (row) => (
             <div className="flex items-center gap-2">
-                <Button className="h-8 text-xs px-4" onClick={() => onEdit(row.BU_ID)}>
-                    Detail
+                <Button
+                    className="h-7 min-w-7 px-2 text-xs flex items-center justify-center"
+                    onClick={() => onEdit(row.BU_ID)}
+                >
+                    <Pencil size={14} />
                 </Button>
-
-                <Button variant="danger" className="h-8 text-xs px-4">
-                    Delete
+                <Button
+                    variant="danger"
+                    className="h-7 min-w-7 px-2 text-xs flex items-center justify-center"
+                    onClick={() => onDelete(row.BU_ID)}
+                >
+                    <Trash2 size={14} />
                 </Button>
             </div>
         ),

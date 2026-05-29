@@ -1,20 +1,15 @@
-import { useState } from "react";
 import MainLayout from "../../components/layout/MainLayout";
 import PageContainer from "../../components/fragments/PageContainer";
 import SearchInput from "../../components/elements/Input/searchInput";
 import Button from "../../components/elements/Button";
 import Table from "../../components/elements/Table";
 import Alert from "../../components/elements/Alert";
+import FormModal from "../../components/fragments/FormModal";
+import ConfirmModal from "../../components/fragments/ConfirmModal";
 import { FileSpreadsheet } from "lucide-react";
 import useBusinessUnits from "../../hooks/useBusinessUnits";
-import FormModal from "../../components/fragments/FormModal";
 import { businessUnitColumns } from "./businessUnit.columns";
 import { businessUnitFields } from "./businessUnit.fields";
-import {
-    createBusinessUnit,
-    getBusinessUnitById,
-    updateBusinessUnit,
-} from "../../services/businessUnit.service";
 
 const BusinessUnits = () => {
     const {
@@ -27,30 +22,22 @@ const BusinessUnits = () => {
         setSearch,
         paging,
         openModal,
-        setOpenModal,
+        deleteModal,
+        setDeleteModal,
+        deleteLoading,
         alert,
         setAlert,
         selectedData,
-        setSelectedData,
         formMode,
-        setFormMode,
-        refetch,
+        isActive,
+        setIsActive,
+        openCreateModal,
+        resetForm,
+        handleEdit,
+        handleSubmit,
+        handleDelete,
+        confirmDelete,
     } = useBusinessUnits();
-
-    const handleEdit = async (id) => {
-        try {
-            const response = await getBusinessUnitById(id);
-            console.log(response);
-
-            setSelectedData(response);
-
-            setFormMode("edit");
-
-            setOpenModal(true);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     return (
         <MainLayout>
@@ -70,7 +57,7 @@ const BusinessUnits = () => {
                         </Button>
 
                         <Button
-                            onClick={() => setOpenModal(true)}
+                            onClick={openCreateModal}
                             className="
                                 px-4 flex items-center gap-2
                             "
@@ -87,6 +74,7 @@ const BusinessUnits = () => {
                         placeholder="Search business unit..."
                         onChange={(e) => {
                             setSearch(e.target.value);
+
                             setPage(1);
                         }}
                     />
@@ -98,6 +86,7 @@ const BusinessUnits = () => {
                         page,
                         limit,
                         onEdit: handleEdit,
+                        onDelete: handleDelete,
                     })}
                     data={data}
                     loading={loading}
@@ -107,23 +96,21 @@ const BusinessUnits = () => {
                     onPageChange={setPage}
                     onLimitChange={(value) => {
                         setLimit(value);
+
                         setPage(1);
                     }}
                 />
 
-                {/* Modal */}
+                {/* Form Modal */}
                 <FormModal
                     key={selectedData?.BU_ID || "create"}
                     open={openModal}
-                    onClose={() => {
-                        setOpenModal(false);
-
-                        setSelectedData(null);
-
-                        setFormMode("create");
-                    }}
+                    onClose={resetForm}
                     title={formMode === "create" ? "Add Business Unit" : "Edit Business Unit"}
                     fields={businessUnitFields}
+                    formMode={formMode}
+                    isActive={isActive}
+                    setIsActive={setIsActive}
                     defaultValues={
                         selectedData
                             ? {
@@ -135,55 +122,17 @@ const BusinessUnits = () => {
                               }
                             : {}
                     }
-                    onSubmit={async (e) => {
-                        e.preventDefault();
+                    onSubmit={handleSubmit}
+                />
 
-                        try {
-                            const formData = new FormData(e.target);
-
-                            const payload = {
-                                bu_code: formData.get("BU_CODE"),
-
-                                bu_name: formData.get("BU_NAME"),
-
-                                bu_desc: formData.get("BU_DESC"),
-
-                                is_active: true,
-                            };
-
-                            let response;
-
-                            if (formMode === "create") {
-                                response = await createBusinessUnit(payload);
-                            } else {
-                                response = await updateBusinessUnit(selectedData.BU_ID, payload);
-                            }
-
-                            refetch();
-
-                            setAlert({
-                                open: true,
-                                variant: "success",
-                                title: "Success",
-                                message: response.message,
-                            });
-
-                            setOpenModal(false);
-
-                            setSelectedData(null);
-
-                            setFormMode("create");
-                        } catch (error) {
-                            console.error(error);
-
-                            setAlert({
-                                open: true,
-                                variant: "error",
-                                title: "Error",
-                                message: error?.response?.data?.message || "Something went wrong",
-                            });
-                        }
-                    }}
+                {/* Confirm Delete */}
+                <ConfirmModal
+                    open={deleteModal}
+                    onClose={() => setDeleteModal(false)}
+                    onConfirm={confirmDelete}
+                    loading={deleteLoading}
+                    title="Delete Business Unit"
+                    message="Are you sure want to delete this business unit?"
                 />
 
                 {/* Alert */}
