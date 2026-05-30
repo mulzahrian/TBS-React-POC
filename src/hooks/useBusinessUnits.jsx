@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { exportToExcel } from "../utils/exportExcel";
 
 import {
     getBusinessUnits,
@@ -146,6 +147,19 @@ const useBusinessUnits = () => {
         }
     };
 
+    const handleExportExcel = () => {
+        const exportData = data.map((item, index) => ({
+            No: (page - 1) * limit + index + 1,
+            "BU Code": item.BU_CODE,
+            "BU Name": item.BU_NAME,
+            Description: item.BU_DESC,
+            "Created By": item.CREATED_BY_NAME,
+            Status: item.IS_ACTIVE === "true" ? "Active" : "Inactive",
+        }));
+
+        exportToExcel(exportData, "Business_Units");
+    };
+
     return {
         data,
         loading,
@@ -174,6 +188,7 @@ const useBusinessUnits = () => {
         handleSubmit,
         handleDelete,
         confirmDelete,
+        handleExportExcel,
         refetch: fetchBusinessUnits,
     };
 };

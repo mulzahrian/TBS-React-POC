@@ -37,6 +37,7 @@ const BusinessUnits = () => {
         handleSubmit,
         handleDelete,
         confirmDelete,
+        handleExportExcel,
     } = useBusinessUnits();
 
     return (
@@ -48,6 +49,7 @@ const BusinessUnits = () => {
 
                     <div className="flex items-center gap-3">
                         <Button
+                            onClick={handleExportExcel}
                             className="
                                 h-9 px-3
                                 flex items-center gap-2
