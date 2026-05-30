@@ -5,10 +5,10 @@ import CardProduct from "../../components/fragments/CardProduct";
 import { getProducts } from "../../services/product.service";
 import { useLogin } from "../../hooks/useLogin";
 
-const Departments = () => {
+const UserTypes = () => {
     return (
         <MainLayout>
-            <PageContainer title="Departments">
+            <PageContainer title="User Types">
                 <Fragment>
                     <div className="flex justify-center py-5"></div>
                 </Fragment>
@@ -17,4 +17,4 @@ const Departments = () => {
     );
 };
 
-export default Departments;
+export default UserTypes;

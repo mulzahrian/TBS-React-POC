@@ -12,7 +12,8 @@ import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import DetailProductPage from "./pages/detailProduct.jsx";
 import Profile from "./pages/profile.jsx";
 import BusinessUnits from "./pages/business-units/index.jsx";
-import Departments from "./pages/departments/Department.jsx";
+import Departments from "./pages/departments/index.jsx";
+import UserTypes from "./pages/user-types/userType.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import GlobalTokenExpiredModal from "./components/elements/Modal/GlobalTokenExpiredModal.jsx";
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path: "/departments",
                 element: <Departments />,
+            },
+            {
+                path: "/user-types",
+                element: <UserTypes />,
             },
             {
                 path: "/profile",

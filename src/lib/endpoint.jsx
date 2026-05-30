@@ -15,4 +15,7 @@ export const ENDPOINTS = {
     HRBUSINESSUNIT: {
         GETBUSINESSUNIT: "/hr-business-units",
     },
+    DEPARTMENT: {
+        GETDEPARTMENT: "/hr-departments",
+    },
 };
