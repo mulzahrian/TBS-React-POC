@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { exportToExcel } from "../utils/exportExcel";
 
-import { getDepartments } from "../services/department.service";
+import { getDepartments, createDepartment, updateDepartment } from "../services/department.service";
 
 const useDepartments = () => {
     const [data, setData] = useState([]);
@@ -65,7 +65,7 @@ const useDepartments = () => {
 
     // const handleEdit = async (id) => {
     //     try {
-    //         const response = await getBusinessUnitById(id);
+    //         const response = await getDepartmentById(id);
     //         setSelectedData(response);
     //         setIsActive(response.IS_ACTIVE === "true");
     //         setFormMode("edit");
@@ -75,40 +75,39 @@ const useDepartments = () => {
     //     }
     // };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const formData = new FormData(e.target);
-    //         const payload = {
-    //             bu_code: formData.get("BU_CODE"),
-    //             bu_name: formData.get("BU_NAME"),
-    //             bu_desc: formData.get("BU_DESC"),
-    //             is_active: isActive,
-    //         };
-    //         let response;
-    //         if (formMode === "create") {
-    //             response = await createBusinessUnit(payload);
-    //         } else {
-    //             response = await updateBusinessUnit(selectedData.BU_ID, payload);
-    //         }
-    //         await fetchBusinessUnits();
-    //         setAlert({
-    //             open: true,
-    //             variant: "success",
-    //             title: "Success",
-    //             message: response.message,
-    //         });
-    //         resetForm();
-    //     } catch (error) {
-    //         console.error(error);
-    //         setAlert({
-    //             open: true,
-    //             variant: "error",
-    //             title: "Error",
-    //             message: error?.response?.data?.message || "Something went wrong",
-    //         });
-    //     }
-    // };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const formData = new FormData(e.target);
+            const payload = {
+                dept_code: formData.get("DEPT_CODE"),
+                dept_name: formData.get("DEPT_NAME"),
+                is_active: isActive,
+            };
+            let response;
+            if (formMode === "create") {
+                response = await createDepartment(payload);
+            } else {
+                response = await updateDepartment(selectedData.DEPT_ID, payload);
+            }
+            await fetchDepartments();
+            setAlert({
+                open: true,
+                variant: "success",
+                title: "Success",
+                message: response.message,
+            });
+            resetForm();
+        } catch (error) {
+            console.error(error);
+            setAlert({
+                open: true,
+                variant: "error",
+                title: "Error",
+                message: error?.response?.data?.message || "Something went wrong",
+            });
+        }
+    };
 
     // const handleDelete = (id) => {
     //     setSelectedId(id);
@@ -179,7 +178,7 @@ const useDepartments = () => {
         openCreateModal,
         resetForm,
         // handleEdit,
-        // handleSubmit,
+        handleSubmit,
         // handleDelete,
         // confirmDelete,
         // handleExportExcel,

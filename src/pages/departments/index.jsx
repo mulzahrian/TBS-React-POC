@@ -9,7 +9,7 @@ import ConfirmModal from "../../components/fragments/ConfirmModal";
 import { FileSpreadsheet } from "lucide-react";
 import useDepartment from "../../hooks/useDepartment";
 import { departmentColumns } from "./department.columns";
-// import { businessUnitFields } from "./businessUnit.fields";
+import { departmentFields } from "./department.fields";
 
 const Departments = () => {
     const {
@@ -104,28 +104,26 @@ const Departments = () => {
                 />
 
                 {/* Form Modal */}
-                {/* <FormModal
-                    key={selectedData?.BU_ID || "create"}
+                <FormModal
+                    key={selectedData?.DEPT_ID || "create"}
                     open={openModal}
                     onClose={resetForm}
-                    title={formMode === "create" ? "Add Business Unit" : "Edit Business Unit"}
-                    fields={businessUnitFields}
+                    title={formMode === "create" ? "Add Department" : "Edit Department"}
+                    fields={departmentFields}
                     formMode={formMode}
                     isActive={isActive}
                     setIsActive={setIsActive}
                     defaultValues={
                         selectedData
                             ? {
-                                  BU_CODE: selectedData.BU_CODE,
+                                  DEPT_CODE: selectedData.DEPT_CODE,
 
-                                  BU_NAME: selectedData.BU_NAME,
-
-                                  BU_DESC: selectedData.BU_DESC,
+                                  DEPT_NAME: selectedData.DEPT_NAME,
                               }
                             : {}
                     }
                     onSubmit={handleSubmit}
-                /> */}
+                />
 
                 {/* Confirm Delete */}
                 {/* <ConfirmModal
