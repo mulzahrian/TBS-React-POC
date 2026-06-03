@@ -41,7 +41,7 @@ export const departmentColumns = ({ page, limit, onEdit, onDelete }) => [
             <div className="flex items-center gap-2">
                 <Button
                     className="h-7 min-w-7 px-2 text-xs flex items-center justify-center"
-                    // onClick={() => onEdit(row.BU_ID)}
+                    onClick={() => onEdit(row.dept_id)}
                 >
                     <Pencil size={14} />
                 </Button>

@@ -105,7 +105,7 @@ const Departments = () => {
 
                 {/* Form Modal */}
                 <FormModal
-                    key={selectedData?.DEPT_ID || "create"}
+                    key={selectedData?.dept_id || "create"}
                     open={openModal}
                     onClose={resetForm}
                     title={formMode === "create" ? "Add Department" : "Edit Department"}
@@ -116,9 +116,9 @@ const Departments = () => {
                     defaultValues={
                         selectedData
                             ? {
-                                  DEPT_CODE: selectedData.DEPT_CODE,
+                                  dept_code: selectedData.dept_code,
 
-                                  DEPT_NAME: selectedData.DEPT_NAME,
+                                  dept_name: selectedData.dept_name,
                               }
                             : {}
                     }

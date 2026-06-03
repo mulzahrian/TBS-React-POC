@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { exportToExcel } from "../utils/exportExcel";
 
-import { getDepartments, createDepartment, updateDepartment } from "../services/department.service";
+import {
+    getDepartments,
+    createDepartment,
+    updateDepartment,
+    getDepartmentById,
+} from "../services/department.service";
 
 const useDepartments = () => {
     const [data, setData] = useState([]);
@@ -63,32 +68,32 @@ const useDepartments = () => {
         setIsActive(true);
     };
 
-    // const handleEdit = async (id) => {
-    //     try {
-    //         const response = await getDepartmentById(id);
-    //         setSelectedData(response);
-    //         setIsActive(response.IS_ACTIVE === "true");
-    //         setFormMode("edit");
-    //         setOpenModal(true);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
+    const handleEdit = async (id) => {
+        try {
+            const response = await getDepartmentById(id);
+            setSelectedData(response);
+            setIsActive(response.is_active === "true");
+            setFormMode("edit");
+            setOpenModal(true);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const formData = new FormData(e.target);
             const payload = {
-                dept_code: formData.get("DEPT_CODE"),
-                dept_name: formData.get("DEPT_NAME"),
+                dept_code: formData.get("dept_code"),
+                dept_name: formData.get("dept_name"),
                 is_active: isActive,
             };
             let response;
             if (formMode === "create") {
                 response = await createDepartment(payload);
             } else {
-                response = await updateDepartment(selectedData.DEPT_ID, payload);
+                response = await updateDepartment(selectedData.dept_id, payload);
             }
             await fetchDepartments();
             setAlert({
@@ -177,7 +182,7 @@ const useDepartments = () => {
         deleteLoading,
         openCreateModal,
         resetForm,
-        // handleEdit,
+        handleEdit,
         handleSubmit,
         // handleDelete,
         // confirmDelete,

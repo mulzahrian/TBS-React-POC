@@ -35,6 +35,19 @@ export const createDepartment = async (payload) => {
     return response.data;
 };
 
+export const getDepartmentById = async (id) => {
+    const token = localStorage.getItem("token");
+
+    const response = await apiGet({
+        url: `${API_URL}${ENDPOINTS.DEPARTMENT.GETDEPARTMENT}/${id}`,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data;
+};
+
 export const updateDepartment = async (id, payload) => {
     const token = localStorage.getItem("token");
 
