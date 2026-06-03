@@ -126,14 +126,14 @@ const Departments = () => {
                 />
 
                 {/* Confirm Delete */}
-                {/* <ConfirmModal
+                <ConfirmModal
                     open={deleteModal}
                     onClose={() => setDeleteModal(false)}
                     onConfirm={confirmDelete}
                     loading={deleteLoading}
-                    title="Delete Business Unit"
-                    message="Are you sure want to delete this business unit?"
-                /> */}
+                    title="Delete Department"
+                    message="Are you sure want to delete this department?"
+                />
 
                 {/* Alert */}
                 {alert.open && (

@@ -48,7 +48,7 @@ export const departmentColumns = ({ page, limit, onEdit, onDelete }) => [
                 <Button
                     variant="danger"
                     className="h-7 min-w-7 px-2 text-xs flex items-center justify-center"
-                    // onClick={() => onDelete(row.BU_ID)}
+                    onClick={() => onDelete(row.dept_id)}
                 >
                     <Trash2 size={14} />
                 </Button>

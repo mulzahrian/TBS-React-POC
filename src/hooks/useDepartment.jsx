@@ -6,6 +6,7 @@ import {
     createDepartment,
     updateDepartment,
     getDepartmentById,
+    deleteDepartment,
 } from "../services/department.service";
 
 const useDepartments = () => {
@@ -114,49 +115,48 @@ const useDepartments = () => {
         }
     };
 
-    // const handleDelete = (id) => {
-    //     setSelectedId(id);
-    //     setDeleteModal(true);
-    // };
+    const handleDelete = (id) => {
+        setSelectedId(id);
+        setDeleteModal(true);
+    };
 
-    // const confirmDelete = async () => {
-    //     try {
-    //         setDeleteLoading(true);
-    //         const response = await deleteBusinessUnit(selectedId);
-    //         await fetchBusinessUnits();
-    //         setAlert({
-    //             open: true,
-    //             variant: "success",
-    //             title: "Success",
-    //             message: response.message,
-    //         });
-    //         setDeleteModal(false);
-    //         setSelectedId(null);
-    //     } catch (error) {
-    //         console.error(error);
-    //         setAlert({
-    //             open: true,
-    //             variant: "error",
-    //             title: "Error",
-    //             message: error?.response?.data?.message || "Something went wrong",
-    //         });
-    //     } finally {
-    //         setDeleteLoading(false);
-    //     }
-    // };
+    const confirmDelete = async () => {
+        try {
+            setDeleteLoading(true);
+            const response = await deleteDepartment(selectedId);
+            await fetchDepartments();
+            setAlert({
+                open: true,
+                variant: "success",
+                title: "Success",
+                message: response.message,
+            });
+            setDeleteModal(false);
+            setSelectedId(null);
+        } catch (error) {
+            console.error(error);
+            setAlert({
+                open: true,
+                variant: "error",
+                title: "Error",
+                message: error?.response?.data?.message || "Something went wrong",
+            });
+        } finally {
+            setDeleteLoading(false);
+        }
+    };
 
-    // const handleExportExcel = () => {
-    //     const exportData = data.map((item, index) => ({
-    //         No: (page - 1) * limit + index + 1,
-    //         "BU Code": item.BU_CODE,
-    //         "BU Name": item.BU_NAME,
-    //         Description: item.BU_DESC,
-    //         "Created By": item.CREATED_BY_NAME,
-    //         Status: item.IS_ACTIVE === "true" ? "Active" : "Inactive",
-    //     }));
+    const handleExportExcel = () => {
+        const exportData = data.map((item, index) => ({
+            No: (page - 1) * limit + index + 1,
+            "Department Code": item.dept_code,
+            "Department Name": item.dept_name,
+            "Created By": item.created_by_name,
+            Status: item.is_active === "true" ? "Active" : "Inactive",
+        }));
 
-    //     exportToExcel(exportData, "Business_Units");
-    // };
+        exportToExcel(exportData, "Departments");
+    };
 
     return {
         data,
@@ -184,10 +184,10 @@ const useDepartments = () => {
         resetForm,
         handleEdit,
         handleSubmit,
-        // handleDelete,
-        // confirmDelete,
-        // handleExportExcel,
-        // refetch: fetchBusinessUnits,
+        handleDelete,
+        confirmDelete,
+        handleExportExcel,
+        refetch: fetchDepartments,
     };
 };
 
