@@ -14,6 +14,7 @@ import Profile from "./pages/profile.jsx";
 import BusinessUnits from "./pages/business-units/index.jsx";
 import Departments from "./pages/departments/index.jsx";
 import UserTypes from "./pages/user-types/userType.jsx";
+import Privilages from "./pages/privilages/privilages.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import GlobalTokenExpiredModal from "./components/elements/Modal/GlobalTokenExpiredModal.jsx";
 
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
             {
                 path: "/user-types",
                 element: <UserTypes />,
+            },
+            {
+                path: "/privilages",
+                element: <Privilages />,
             },
             {
                 path: "/profile",

@@ -18,4 +18,7 @@ export const ENDPOINTS = {
     DEPARTMENT: {
         GETDEPARTMENT: "/hr-departments",
     },
+    USERTYPE: {
+        GETUSERTYPE: "/user-types",
+    },
 };
