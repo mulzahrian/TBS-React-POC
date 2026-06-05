@@ -86,15 +86,15 @@ const useUserTypes = () => {
         try {
             const formData = new FormData(e.target);
             const payload = {
-                user_type_code: formData.get("user_type_code"),
-                user_type_name: formData.get("user_type_name"),
+                usertype_code: formData.get("usertype_code"),
+                usertype_name: formData.get("usertype_name"),
                 is_active: isActive,
             };
             let response;
             if (formMode === "create") {
                 response = await createUserType(payload);
             } else {
-                response = await updateUserType(selectedData.user_type_id, payload);
+                response = await updateUserType(selectedData.usertype_id, payload);
             }
             await fetchUserTypes();
             setAlert({
@@ -149,8 +149,8 @@ const useUserTypes = () => {
     const handleExportExcel = () => {
         const exportData = data.map((item, index) => ({
             No: (page - 1) * limit + index + 1,
-            "User Type Code": item.user_type_code,
-            "User Type Name": item.user_type_name,
+            "User Type Code": item.usertype_code,
+            "User Type Name": item.usertype_name,
             "Created By": item.created_by_name,
             Status: item.is_active === "true" ? "Active" : "Inactive",
         }));
