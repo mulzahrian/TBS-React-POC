@@ -1,7 +1,9 @@
 import Card from "../elements/card";
 import Breadcrumb from "../elements/Breadcrumb";
+import { useLogin } from "../../hooks/useLogin";
 
 const PageContainer = ({ title, children }) => {
+    const username = useLogin();
     return (
         <div>
             <div className="mb-3">

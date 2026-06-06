@@ -6,8 +6,6 @@ import { useLogin } from "../../hooks/useLogin";
 import { Bus, PhoneCall, CalendarClock, Truck } from "lucide-react";
 
 const Dashboard = () => {
-    const username = useLogin();
-
     return (
         <MainLayout>
             <PageContainer title="Dashboard">
