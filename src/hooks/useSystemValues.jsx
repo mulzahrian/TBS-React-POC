@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { exportToExcel } from "../utils/exportExcel";
 
 import {
-    getUserTypes,
-    createUserType,
-    updateUserType,
-    getUserTypeById,
-    deleteUserType,
-} from "../services/userType.service.service";
+    getSystemValues,
+    createSystemValue,
+    updateSystemValue,
+    getSystemValueById,
+    deleteSystemValue,
+} from "../services/systemValues.service";
 
-const useUserTypes = () => {
+const useSystemValues = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openModal, setOpenModal] = useState(false);
@@ -34,10 +34,10 @@ const useUserTypes = () => {
         totalPages: 1,
     });
 
-    const fetchUserTypes = async () => {
+    const fetchSystemValues = async () => {
         try {
             setLoading(true);
-            const response = await getUserTypes({
+            const response = await getSystemValues({
                 page,
                 limit,
                 search,
@@ -52,7 +52,7 @@ const useUserTypes = () => {
     };
 
     useEffect(() => {
-        fetchUserTypes();
+        fetchSystemValues();
     }, [page, limit, search]);
 
     const openCreateModal = () => {
@@ -71,7 +71,7 @@ const useUserTypes = () => {
 
     const handleEdit = async (id) => {
         try {
-            const response = await getUserTypeById(id);
+            const response = await getSystemValueById(id);
             setSelectedData(response);
             setIsActive(response.is_active === "true");
             setFormMode("edit");
@@ -86,17 +86,17 @@ const useUserTypes = () => {
         try {
             const formData = new FormData(e.target);
             const payload = {
-                usertype_code: formData.get("usertype_code"),
-                usertype_name: formData.get("usertype_name"),
+                sysvalue_name: formData.get("sysvalue_name"),
+                value: formData.get("value"),
                 is_active: isActive,
             };
             let response;
             if (formMode === "create") {
-                response = await createUserType(payload);
+                response = await createSystemValue(payload);
             } else {
-                response = await updateUserType(selectedData.usertype_id, payload);
+                response = await updateSystemValue(selectedData.sysvalue_id, payload);
             }
-            await fetchUserTypes();
+            await fetchSystemValues();
             setAlert({
                 open: true,
                 variant: "success",
@@ -123,8 +123,8 @@ const useUserTypes = () => {
     const confirmDelete = async () => {
         try {
             setDeleteLoading(true);
-            const response = await deleteUserType(selectedId);
-            await fetchUserTypes();
+            const response = await deleteSystemValue(selectedId);
+            await fetchSystemValues();
             setAlert({
                 open: true,
                 variant: "success",
@@ -149,13 +149,13 @@ const useUserTypes = () => {
     const handleExportExcel = () => {
         const exportData = data.map((item, index) => ({
             No: (page - 1) * limit + index + 1,
-            "User Type Code": item.usertype_code,
-            "User Type Name": item.usertype_name,
+            "System Value Name": item.sysvalue_name,
+            "System Value": item.value,
             "Created By": item.created_by_name,
             Status: item.is_active === "true" ? "Active" : "Inactive",
         }));
 
-        exportToExcel(exportData, "UserTypes");
+        exportToExcel(exportData, "SystemValues");
     };
 
     return {
@@ -187,8 +187,8 @@ const useUserTypes = () => {
         handleDelete,
         confirmDelete,
         handleExportExcel,
-        refetch: fetchUserTypes,
+        refetch: fetchSystemValues,
     };
 };
 
-export default useUserTypes;
+export default useSystemValues;

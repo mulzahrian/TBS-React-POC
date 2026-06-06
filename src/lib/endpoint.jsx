@@ -21,4 +21,7 @@ export const ENDPOINTS = {
     USERTYPE: {
         GETUSERTYPE: "/user-types",
     },
+    SYSTEMVALUES: {
+        GETSYSTEMVALUES: "/sys-values",
+    },
 };
