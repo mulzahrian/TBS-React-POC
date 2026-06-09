@@ -29,6 +29,7 @@ const FormModal = ({
                                     name={field.name}
                                     type={field.type}
                                     placeholder={field.placeholder}
+                                    options={field.options}
                                     defaultValue={defaultValues?.[field.name] || ""}
                                 />
                             </div>

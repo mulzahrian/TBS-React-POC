@@ -14,7 +14,11 @@ export const vehicleFields = [
     {
         label: "Vehicle Type",
         name: "vehicle_type",
-        type: "text",
-        placeholder: "Input vehicle type",
+        type: "select",
+        options: [
+            { label: "Bus", value: "BUS" },
+            { label: "Station", value: "STATION" },
+            { label: "Hi-Ace", value: "HI-ACE" },
+        ],
     },
 ];

@@ -6,7 +6,7 @@ const Card = ({
     size = "full", // sm | md | lg | full
 }) => {
     const sizeClass = {
-        sm: "max-w-xs",
+        sm: "max-w-sm",
         md: "max-w-md",
         lg: "max-w-2xl",
         full: "max-w-full",
