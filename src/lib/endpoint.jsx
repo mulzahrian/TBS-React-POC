@@ -24,4 +24,7 @@ export const ENDPOINTS = {
     SYSTEMVALUES: {
         GETSYSTEMVALUES: "/sys-values",
     },
+    VEHICLES: {
+        GETVEHICLES: "/tr-vehicles",
+    },
 };
