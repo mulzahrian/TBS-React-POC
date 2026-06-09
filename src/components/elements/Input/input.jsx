@@ -107,7 +107,7 @@ const Input = (props) => {
                                     text-left
                                     text-sm
 
-                                    hover:bg-slate-100
+                                    hover:bg-blue-300
                                     transition-colors
                                 "
                             >
