@@ -27,4 +27,7 @@ export const ENDPOINTS = {
     VEHICLES: {
         GETVEHICLES: "/tr-vehicles",
     },
+    DRIVERS: {
+        GETDRIVERS: "/tr-drivers",
+    },
 };
