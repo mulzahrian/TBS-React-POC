@@ -30,4 +30,7 @@ export const ENDPOINTS = {
     DRIVERS: {
         GETDRIVERS: "/tr-drivers",
     },
+    SCHEDULES_BUS: {
+        GETSCHEDULES_BUS: "/tr-schedule-bus",
+    },
 };

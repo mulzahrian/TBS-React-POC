@@ -19,6 +19,7 @@ import SystemValues from "./pages/system-values/index.jsx";
 import Employees from "./pages/employees/index.jsx";
 import Vehicles from "./pages/vehicles/index.jsx";
 import Drivers from "./pages/drivers/index.jsx";
+import SchedulesBus from "./pages/schedules-bus/index.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import GlobalTokenExpiredModal from "./components/elements/Modal/GlobalTokenExpiredModal.jsx";
 
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
             {
                 path: "/drivers",
                 element: <Drivers />,
+            },
+            {
+                path: "/schedules-bus",
+                element: <SchedulesBus />,
             },
             {
                 path: "/profile",
